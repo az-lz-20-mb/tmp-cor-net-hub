@@ -1,6 +1,7 @@
 locals {
   virtual_hub_key = "${var.name}-hub-key"
   firewall_key    = "fw-${var.name}-key"
+  vpn_gateways_key = "${var.name}-vpn-gateway-key"
 }
 
 module "vwan_with_vhub" {
