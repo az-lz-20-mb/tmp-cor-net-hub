@@ -25,15 +25,10 @@ variable "owner" {
   default     = "team@example.com"
 }
 
-variable "con_vnet_1_id" {
+variable "con_vnet_ids" {
   description = "The name of the virtual network."
   type        = string
   
-}
-
-variable "con_vnet_2_id" {
-  description = "The name of the virtual network."
-  type        = string
 }
 
 variable "vpn_encryption" {
