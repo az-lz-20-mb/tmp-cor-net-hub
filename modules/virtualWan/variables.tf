@@ -27,7 +27,7 @@ variable "owner" {
 
 variable "con_vnet_ids" {
   description = "The name of the virtual network."
-  type        = string
+  type        = list(string)
   
 }
 
