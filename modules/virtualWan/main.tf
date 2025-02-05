@@ -32,16 +32,10 @@ module "vwan_with_vhub" {
     }
   }
   virtual_network_connections = {
-    vnet1 = {
-      name                      = "vnet1-connection"
+    for vnet_id in var.con_vnet_ids : vnet_id => {
+      name                      = "${basename(vnet_id)}-connection"
       virtual_hub_key           = local.virtual_hub_key
-      remote_virtual_network_id = var.con_vnet_1_id
-      internet_security_enabled = var.internet_security_enabled
-    }
-    vnet2 = {
-      name                      = "vnet2-connection"
-      virtual_hub_key           = local.virtual_hub_key
-      remote_virtual_network_id = var.con_vnet_2_id
+      remote_virtual_network_id = vnet_id
       internet_security_enabled = var.internet_security_enabled
     }
   }
