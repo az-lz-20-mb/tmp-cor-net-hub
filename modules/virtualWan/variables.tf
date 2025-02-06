@@ -84,9 +84,9 @@ variable "virtual_network_connections" {
     internet_security_enabled = bool
   }))
   default = {
-    "default_connection" = {
+    "connection" = {
       virtual_hub_key           = local.virtual_hub_key
-      internet_security_enabled = var.default_internet_security_enabled
+      internet_security_enabled = var.internet_security_enabled
     }
   }
 }
