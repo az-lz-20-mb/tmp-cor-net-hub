@@ -25,11 +25,11 @@ variable "owner" {
   default     = "team@example.com"
 }
 
-# variable "con_vnet_ids" {
-#   description = "The name of the virtual network."
-#   type        = list(string)
+variable "con_vnet_ids" {
+  description = "The name of the virtual network."
+  type        = list(string)
   
-# }
+}
 
 variable "vpn_encryption" {
   description = "Enable VPN encryption."
