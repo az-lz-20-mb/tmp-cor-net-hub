@@ -76,17 +76,3 @@ variable "firewall_sku_tier" {
   type        = string
   default     = "Standard"
 }
-
-variable "virtual_network_connections" {
-  description = "Map of virtual network connections"
-  type = map(object({
-    virtual_hub_key           = string
-    internet_security_enabled = bool
-  }))
-  default = {
-    "connection" = {
-      virtual_hub_key           = local.virtual_hub_key
-      internet_security_enabled = var.internet_security_enabled
-    }
-  }
-}
