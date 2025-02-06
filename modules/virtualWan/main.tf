@@ -32,12 +32,11 @@ module "vwan_with_vhub" {
     }
   }
   virtual_network_connections = {
-    for vnet_id in var.con_vnet_ids : vnet_id => {
+      for_each = var.con_vnet_ids
       name                      = "${basename(vnet_id)}-connection"
       virtual_hub_key           = local.virtual_hub_key
-      remote_virtual_network_id = vnet_id
+      remote_virtual_network_id = each.value
       internet_security_enabled = var.internet_security_enabled
-    }
   }
    firewalls = {
     (local.firewall_key) = {
