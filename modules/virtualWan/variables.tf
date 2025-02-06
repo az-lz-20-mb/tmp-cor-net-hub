@@ -27,7 +27,7 @@ variable "owner" {
 
 variable "con_vnet_ids" {
   description = "The name of the virtual network."
-  type        = map(string)
+  type        = list(string)
   
 }
 
@@ -75,4 +75,18 @@ variable "firewall_sku_tier" {
   description = "The firewall SKU tier."
   type        = string
   default     = "Standard"
+}
+
+variable "virtual_network_connections" {
+  description = "Map of virtual network connections"
+  type = map(object({
+    virtual_hub_key           = string
+    internet_security_enabled = bool
+  }))
+  default = {
+    "default_connection" = {
+      virtual_hub_key           = local.virtual_hub_key
+      internet_security_enabled = var.default_internet_security_enabled
+    }
+  }
 }
