@@ -25,11 +25,11 @@ variable "owner" {
   default     = "team@example.com"
 }
 
-variable "con_vnet_ids" {
-  description = "The name of the virtual network."
-  type        = list(string)
+# variable "con_vnet_ids" {
+#   description = "The name of the virtual network."
+#   type        = list(string)
   
-}
+# }
 
 variable "vpn_encryption" {
   description = "Enable VPN encryption."
@@ -47,11 +47,6 @@ variable "type" {
   description = "The type of the Virtual WAN."
   type        = string
   default     = "Standard"
-}
-
-variable "address_prefix" {
-  description = "The address prefix of the virtual hub."
-  type        = string
 }
 
 variable "short_location" {
@@ -75,4 +70,16 @@ variable "firewall_sku_tier" {
   description = "The firewall SKU tier."
   type        = string
   default     = "Standard"
+}
+
+variable "virtual_hubs" {
+  description = "The virtual hubs."
+  type        = list(object({
+    name            = string
+    location        = string
+    resource_group  = string
+    address_prefix  = string
+    deploy_firewall = bool
+    deploy_vpn_gateway = bool
+  }))
 }

@@ -1,7 +1,7 @@
 locals {
-  virtual_hub_key = "${var.name}-hub-key"
-  firewall_key    = "fw-${var.name}-key"
-  vpn_gateways_key = "${var.name}-vpn-gateway-key"
+  virtual_hub_keys = { for hub in var.virtual_hubs : hub.name => "${hub.name}-hub-key" }
+  firewall_keys    = { for hub in var.virtual_hubs : hub.name => "fw-${hub.name}-key" if hub.deploy_firewall }
+  vpn_gateway_keys = { for hub in var.virtual_hubs : hub.name => "${hub.name}-vpn-gateway-key" if hub.deploy_vpn_gateway }
 }
 
 module "vwan_with_vhub" {
@@ -18,50 +18,54 @@ module "vwan_with_vhub" {
     owner       = var.owner
     location    = var.short_location
   }
+
+  # Dynamic Virtual Hubs with virtual_hub_key
   virtual_hubs = {
-    (local.virtual_hub_key) = {
-      name           = "${var.name}-hub"
-      location       = var.location
-      resource_group = var.resource_group_name
-      address_prefix = var.address_prefix
-      tags = {
-        environment = var.environment
-        owner       = var.owner
-        location    = var.short_location
-      }
+    for hub in var.virtual_hubs : local.virtual_hub_keys[hub.name] => {
+      name           = hub.name
+      location       = hub.location
+      resource_group = hub.resource_group
+      address_prefix = hub.address_prefix
     }
   }
-  virtual_network_connections = {
-    for vnet_id in var.con_vnet_ids : vnet_id => {
-      name            = "${var.name}-vnet-connection"
-      virtual_hub_key = local.virtual_hub_key
-      remote_virtual_network_id   = vnet_id
-      internet_security_enabled = var.internet_security_enabled
-    }
+
+  # virtual_network_connections = {
+  #   for vnet_id in var.con_vnet_ids : vnet_id => {
+  #     name            = "${var.name}-vnet-connection"
+  #     virtual_hub_key = local.virtual_hub_key
+  #     remote_virtual_network_id   = vnet_id
+  #     internet_security_enabled = var.internet_security_enabled
+  #   }
+  # }
+  
+  # Dynamic Firewalls using virtual_hub_key
+  firewalls = {
+    for hub in var.virtual_hubs : local.firewall_keys[hub.name] => {
+      sku_name        = "AZFW_Hub"
+      sku_tier        = var.firewall_sku_tier
+      name            = "fw-${hub.name}"
+      virtual_hub_key = local.virtual_hub_keys[hub.name]
+    } if hub.deploy_firewall
   }
-   firewalls = {
-    (local.firewall_key) = {
-      sku_name           = "AZFW_Hub"
-      sku_tier           = var.firewall_sku_tier
-      name               = "fw-${var.name}"
-      virtual_hub_key    = local.virtual_hub_key
-    }
-  }
+
+  # Routing Intent (Only for hubs with firewalls)
   routing_intents = {
-    "${var.name}-routing-intent" = {
+    for hub in var.virtual_hubs : "${hub.name}-routing-intent" => {
       name            = "private-routing-intent"
-      virtual_hub_key = local.virtual_hub_key
+      virtual_hub_key = local.virtual_hub_keys[hub.name]
       routing_policies = [{
-        name                  = "${var.name}-routing-policy-private"
+        name                  = "${hub.name}-routing-policy-private"
         destinations          = ["PrivateTraffic"]
-        next_hop_firewall_key = local.firewall_key
+        next_hop_firewall_key = local.firewall_keys[hub.name]
       }]
-    }
+    } if hub.deploy_firewall
   }
-    vpn_gateways = {
-    (local.vpn_gateways_key) = {
-      name            = "${var.name}-vpn-gateway"
-      virtual_hub_key = local.virtual_hub_key
-    }
+
+  # Dynamic VPN Gateways using virtual_hub_key
+  vpn_gateways = {
+    for hub in var.virtual_hubs : local.vpn_gateway_keys[hub.name] => {
+      name            = "${hub.name}-vpn-gateway"
+      virtual_hub_key = local.virtual_hub_keys[hub.name]
+    } if hub.deploy_vpn_gateway
   }
 }
