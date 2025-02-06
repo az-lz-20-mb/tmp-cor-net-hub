@@ -31,14 +31,14 @@ module "vwan_with_vhub" {
       }
     }
   }
-  virtual_network_connections = {
-    for vnet_id in var.con_vnet_ids : vnet_id => {
-      name            = "${var.name}-vnet-connection"
-      virtual_hub_key = local.virtual_hub_key
-      remote_vnet_id  = vnet_id
-      internet_security_enabled = var.internet_security_enabled
-    }
-  }
+  # virtual_network_connections = {
+  #   for vnet_id in var.con_vnet_ids : vnet_id => {
+  #     name            = "${var.name}-vnet-connection"
+  #     virtual_hub_key = local.virtual_hub_key
+  #     remote_vnet_id  = vnet_id
+  #     internet_security_enabled = var.internet_security_enabled
+  #   }
+  # }
    firewalls = {
     (local.firewall_key) = {
       sku_name           = "AZFW_Hub"
