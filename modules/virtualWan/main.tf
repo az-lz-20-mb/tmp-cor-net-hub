@@ -7,7 +7,7 @@ locals {
   vnet_connections_tmp = toset(flatten([
     for hub_name, vnets in var.vnet_connection : [
       for vnet in vnets : {
-        name                            = "vnet-conn-${hub_name}-${vnet_id}"
+        name                            = "vnet-conn-${hub_name}-${vnet.name}"
         virtual_hub_key                 = lookup(local.virtual_hub_keys, hub_name, null)
         remote_virtual_network_id       = lookup(local.vnet_keys, vnet, null)
         internet_security_enabled       = var.internet_security_enabled
