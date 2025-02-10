@@ -3,6 +3,18 @@ locals {
   firewall_keys    = { for hub in var.virtual_hubs : hub.name => "fw-${hub.name}-key" if hub.deploy_firewall }
   vpn_gateway_keys = { for hub in var.virtual_hubs : hub.name => "${hub.name}-vpn-gateway-key" if hub.deploy_vpn_gateway }
   vnet_keys        = { for vnet in var.con_vnet_ids : vnet.key => vnet.resource_id }
+   # Dynamically Mapping VNETs to Hubs
+  vnet_connections_tmp = toset(flatten([
+    for hub_name, vnets in var.vnet_connection : [
+      for vnet in vnets : {
+        name                            = "vnet-conn-${hub_name}-${vnet_id}"
+        virtual_hub_key                 = lookup(local.virtual_hub_keys, hub_name, null)
+        remote_virtual_network_id       = lookup(local.vnet_keys, vnet, null)
+        internet_security_enabled       = var.internet_security_enabled
+      }
+    ]]))
+
+  vnet_connections = {for vnet_conn in local.vnet_connections_tmp : vnet_conn.name => vnet_conn }
 }
 
 module "vwan_with_vhub" {
@@ -30,17 +42,7 @@ module "vwan_with_vhub" {
     }
   }
  # Dynamically Mapping VNETs to Hubs
-  vnet_connections_tmp = toset(flatten([
-    for hub_name, vnets in var.vnet_connection : [
-      for vnet in vnets : {
-        name                            = "vnet-conn-${hub_name}-${vnet_id}"
-        virtual_hub_key                 = lookup(local.virtual_hub_keys, hub_name, null)
-        remote_virtual_network_id       = lookup(local.vnet_keys, vnet, null)
-        internet_security_enabled       = var.internet_security_enabled
-      }
-    ]]))
-
-  vnet_connections = {for vnet_conn in vnet_connections_tmp : vnet_conn.name => vnet_conn }
+  virtual_network_connections    = local.vnet_connections
 
   # Dynamic Firewalls using virtual_hub_key
   firewalls = {
