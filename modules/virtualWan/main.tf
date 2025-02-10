@@ -1,9 +1,21 @@
 locals {
+  # Dynamically mapping keys to hubs
   virtual_hub_keys = { for hub in var.virtual_hubs : hub.name => "${hub.name}-hub-key" }
   firewall_keys    = { for hub in var.virtual_hubs : hub.name => "fw-${hub.name}-key" if hub.deploy_firewall }
   vpn_gateway_keys = { for hub in var.virtual_hubs : hub.name => "${hub.name}-vpn-gateway-key" if hub.deploy_vpn_gateway }
   vnet_keys = { for key, vnet in var.con_vnet_ids : key => vnet }
-   # Dynamically Mapping VNETs to Hubs
+  
+  # Dynamically Mapping VNETs to Hubs
+  virtual_hubs = {
+    for hub in var.virtual_hubs : local.virtual_hub_keys[hub.name] => {
+      name           = hub.name
+      location       = hub.location
+      resource_group = hub.resource_group
+      address_prefix = hub.address_prefix
+    }
+  }
+
+  # Dynamically Mapping VNETs to Hubs
   vnet_connections_tmp = toset(flatten([
     for hub_name, vnets in var.vnet_connection : [
       for vnet in vnets : {
@@ -15,35 +27,6 @@ locals {
     ]]))
 
   vnet_connections = {for vnet_conn in local.vnet_connections_tmp : vnet_conn.name => vnet_conn }
-}
-
-module "vwan_with_vhub" {
-  source                         = "git::https://github.com/az-lz-20-mb/mod-avm-res-virtualwan.git"
-  create_resource_group          = var.create_resource_group
-  resource_group_name            = var.resource_group_name
-  location                       = var.location
-  virtual_wan_name               = var.name
-  disable_vpn_encryption         = var.vpn_encryption
-  allow_branch_to_branch_traffic = var.allow_b2b_traffic
-  type                           = var.type
-  virtual_wan_tags = {
-    environment = var.environment
-    owner       = var.owner
-    location    = var.short_location
-  }
-
-  # Dynamic Virtual Hubs with virtual_hub_key
-  virtual_hubs = {
-    for hub in var.virtual_hubs : local.virtual_hub_keys[hub.name] => {
-      name           = hub.name
-      location       = hub.location
-      resource_group = hub.resource_group
-      address_prefix = hub.address_prefix
-    }
-  }
- # Dynamically Mapping VNETs to Hubs
-  virtual_network_connections    = local.vnet_connections
-
   # Dynamic Firewalls using virtual_hub_key
   firewalls = {
     for hub in var.virtual_hubs : local.firewall_keys[hub.name] => {
@@ -74,4 +57,25 @@ module "vwan_with_vhub" {
       virtual_hub_key = local.virtual_hub_keys[hub.name]
     } if hub.deploy_vpn_gateway
   }
+}
+
+module "vwan_with_vhub" {
+  source                         = "git::https://github.com/az-lz-20-mb/mod-avm-res-virtualwan.git"
+  create_resource_group          = var.create_resource_group
+  resource_group_name            = var.resource_group_name
+  location                       = var.location
+  virtual_wan_name               = var.name
+  disable_vpn_encryption         = var.vpn_encryption
+  allow_branch_to_branch_traffic = var.allow_b2b_traffic
+  type                           = var.type
+  virtual_wan_tags = {
+    environment                  = var.environment
+    owner                        = var.owner
+    location                     = var.short_location
+  }
+  virtual_hubs                   = local.virtual_hubs
+  virtual_network_connections    = local.vnet_connections
+  firewalls                      = local.firewalls
+  routing_intents                = local.routing_intents
+  vpn_gateways                   = local.vpn_gateways
 }
