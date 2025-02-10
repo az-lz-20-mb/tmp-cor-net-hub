@@ -29,15 +29,15 @@ module "vwan_with_vhub" {
     }
   }
 
-  # virtual_network_connections = {
-  #   for vnet_id in var.con_vnet_ids : vnet_id => {
-  #     name            = "${var.name}-vnet-connection"
-  #     virtual_hub_key = local.virtual_hub_key
-  #     remote_virtual_network_id   = vnet_id
-  #     internet_security_enabled = var.internet_security_enabled
-  #   }
-  # }
-  
+  virtual_network_connections = {
+      for hub_key, vnets in var.vnet_connection : "${hub_key}-${vnet_id}" => {
+          name                        = "${hub_key}-vnet-connection-${vnet_id}"
+          virtual_hub_key             = hub_key
+          remote_virtual_network_id   = vnet_id
+          internet_security_enabled   = var.internet_security_enabled
+        }
+    }
+
   # Dynamic Firewalls using virtual_hub_key
   firewalls = {
     for hub in var.virtual_hubs : local.firewall_keys[hub.name] => {

@@ -83,3 +83,8 @@ variable "virtual_hubs" {
     deploy_vpn_gateway = bool
   }))
 }
+
+variable "vnet_connection" {
+  type = map(list(string))
+  description = "Mapping of Virtual Hubs to their associated VNets"
+}
