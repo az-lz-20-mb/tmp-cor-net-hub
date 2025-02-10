@@ -29,14 +29,17 @@ module "vwan_with_vhub" {
     }
   }
 
-  virtual_network_connections = {
-      for hub_key, vnets in var.vnet_connection : "${hub_key}-${vnet_id}" => {
-          name                        = "${hub_key}-vnet-connection-${vnet_id}"
-          virtual_hub_key             = hub_key
-          remote_virtual_network_id   = vnet_id
-          internet_security_enabled   = var.internet_security_enabled
-        }
-    }
+  virtual_network_connections = flatten([
+    for hub_name, vnets in var.vnet_connection : [
+      for vnet_id in vnets : {
+        key                       = "${hub_name}-${vnet_id}"
+        name                      = "${hub_name}-vnet-connection-${vnet_id}"
+        virtual_hub_key           = local.virtual_hub_keys[hub_name]
+        remote_virtual_network_id = vnet_id
+        internet_security_enabled = var.internet_security_enabled
+      }
+    ]
+  ])
 
   # Dynamic Firewalls using virtual_hub_key
   firewalls = {
