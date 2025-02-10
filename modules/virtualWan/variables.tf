@@ -25,11 +25,9 @@ variable "owner" {
   default     = "team@example.com"
 }
 
-# variable "con_vnet_ids" {
-#   description = "The name of the virtual network."
-#   type        = list(string)
-  
-# }
+variable "con_vnet_ids" {
+  description = "The name of the virtual network."
+}
 
 variable "vpn_encryption" {
   description = "Enable VPN encryption."
@@ -88,3 +86,4 @@ variable "vnet_connection" {
   type = map(list(string))
   description = "Mapping of Virtual Hubs to their associated VNets"
 }
+
