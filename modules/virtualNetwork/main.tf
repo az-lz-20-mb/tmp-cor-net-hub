@@ -14,7 +14,7 @@ module "vnet" {
   }
 
   subnets = { for subnet_key, subnet_config in each.value.subnets : subnet_key => {
-    name                            = "${each.value.vnet_name}-${subnet_key}"
+    name                            = "${var.name}-${subnet_key}"
     address_prefixes                = subnet_config.address_prefixes
     default_outbound_access_enabled = subnet_config.default_outbound_access_enabled
   }}
