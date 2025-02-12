@@ -23,7 +23,7 @@ variable "location" {
   description = "The location of the resources"
 }
 
-variable "short_location" {
+variable "name" {
   type        = string
-  description = "The short location of the resources"
+  description = "The name of the virtual network"
 }
