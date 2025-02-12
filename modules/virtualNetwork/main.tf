@@ -23,3 +23,6 @@ module "vnet" {
 output "vnet_ids" {
   value = { for k, v in module.vnet : k => v.resource_id }
 }
+output "subnet_ids" {
+  value = { for k, v in module.vnet : k => v.subnets.resource_id }  
+}
