@@ -2,9 +2,9 @@ module "vnet" {
   for_each = var.vnets
 
   source              = "git::https://github.com/az-lz-20-mb/mod-avm-res-virtualnetwork.git"
-  resource_group_name = each.value.resource_group_name
-  location            = each.value.location
-  name                = each.value.vnet_name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  name                = var.name
 
   address_space = each.value.vnet_address_space
 

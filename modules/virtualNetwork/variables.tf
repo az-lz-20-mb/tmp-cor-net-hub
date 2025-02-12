@@ -12,3 +12,18 @@ variable "vnets" {
     }))
   }))
 }
+
+variable "resource_group_name" {
+  type        = string
+  description = "The name of the resource group"
+}
+
+variable "location" {
+  type        = string
+  description = "The location of the resources"
+}
+
+variable "short_location" {
+  type        = string
+  description = "The short location of the resources"
+}
