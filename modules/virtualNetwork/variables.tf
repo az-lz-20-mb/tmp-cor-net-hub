@@ -24,3 +24,8 @@ variable "name" {
   type        = string
   description = "The name of the virtual network"
 }
+
+variable "subnet_name" {
+  type        = string
+  description = "The name of the subnet"
+}
