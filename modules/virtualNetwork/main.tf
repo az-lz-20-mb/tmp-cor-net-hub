@@ -4,7 +4,7 @@ module "vnet" {
   source              = "git::https://github.com/az-lz-20-mb/mod-avm-res-virtualnetwork.git"
   resource_group_name = var.resource_group_name
   location            = var.location
-  name                = var.name
+  name                = "${var.name}-${each.key}"
 
   address_space = each.value.vnet_address_space
 
