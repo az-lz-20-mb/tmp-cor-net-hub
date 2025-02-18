@@ -1,4 +1,4 @@
-module "hub_mesh" {
+module "hubnetworking_hub" {
   source = "git::https://github.com/az-lz-20-mb/mod-avm-ptn-hubnetworking.git"
 
   hub_virtual_networks = {
@@ -6,7 +6,7 @@ module "hub_mesh" {
       name                            = hub.name
       address_space                   = hub.address_space
       location                        = hub.location
-      resource_group_name             = azurerm_resource_group.hub_rg[key].name
+      resource_group_name             = var.resource_group_name
       resource_group_creation_enabled = false
       resource_group_lock_enabled     = false
       mesh_peering_enabled            = true
