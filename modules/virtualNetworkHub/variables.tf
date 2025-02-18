@@ -12,12 +12,12 @@ variable "hub_virtual_networks" {
       sku_name              = string
       sku_tier              = string
       zones                 = list(string)
-      default_ip_configuration = object({
-        public_ip_config = object({
-          name  = string
-          zones = list(string)
-        })
-      })
+    #   default_ip_configuration = object({
+    #     public_ip_config = object({
+    #       name  = string
+    #       zones = list(string)
+    #     })
+    #   })
       firewall_policy = object({
         name = string
         dns = object({
