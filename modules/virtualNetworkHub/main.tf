@@ -18,13 +18,6 @@ module "hubnetworking_hub" {
         name                  = hub.firewall.name
         sku_name              = hub.firewall.sku_name
         sku_tier              = hub.firewall.sku_tier
-        zones                 = hub.firewall.zones
-        # default_ip_configuration = {
-        #   public_ip_config = {
-        #     name  = hub.firewall.default_ip_configuration.public_ip_config.name
-        #     zones = hub.firewall.default_ip_configuration.public_ip_config.zones
-        #   }
-        # }
         firewall_policy = {
           name = hub.firewall.firewall_policy.name
           dns = {
