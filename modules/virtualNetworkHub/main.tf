@@ -6,7 +6,7 @@ module "hubnetworking_hub" {
       name                            = "${var.hub_name}-${hub.index}"
       address_space                   = hub.address_space
       location                        = hub.location
-      resource_group_name             = var.resource_group_name
+      resource_group_name             = lookup(var.resource_group_name, hub.index, "rg-tst-gwc-net-hub")
       resource_group_creation_enabled = false
       resource_group_lock_enabled     = false
       mesh_peering_enabled            = true
