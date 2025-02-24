@@ -27,8 +27,7 @@ variable "hub_virtual_networks" {
 }
 
 variable "resource_group_name" {
-  description = "The name of the resource group in which the virtual network will be created"
-  type        = string
+  type = map(string)
 }
 
 variable "firewall_name" {
