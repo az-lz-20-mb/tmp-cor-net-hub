@@ -26,7 +26,11 @@ variable "hub_virtual_networks" {
 }
 
 variable "resource_group_name" {
-  type = map(string)
+  type = map(object({
+    rg = string
+    location = string
+    short_location = string
+  }))
 }
 
 variable "firewall_name" {
