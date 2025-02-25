@@ -5,8 +5,8 @@ module "hubnetworking_hub" {
     for key, hub in var.hub_virtual_networks : key => {
       name                            = "${var.hub_name}-${hub.index}"
       address_space                   = hub.address_space
-      location                        = lookup(var.resource_group_name.location, hub.index)
-      resource_group_name             = lookup(var.resource_group_name.rg, hub.index)
+      location                        = lookup(var.resource_group_name[hub.index], "location")
+      resource_group_name             = lookup(var.resource_group_name[hub.index], "rg")
       resource_group_creation_enabled = false
       resource_group_lock_enabled     = false
       mesh_peering_enabled            = true
