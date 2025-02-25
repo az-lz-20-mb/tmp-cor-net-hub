@@ -2,7 +2,6 @@ variable "hub_virtual_networks" {
   type = map(object({
     index            = string
     address_space   = list(string)
-    location        = string
     routing_address_space = list(string)
 
     firewall = optional(object({
