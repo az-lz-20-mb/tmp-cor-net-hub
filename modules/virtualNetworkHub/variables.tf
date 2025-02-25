@@ -24,7 +24,6 @@ variable "hub_virtual_networks" {
     }))
   }))
 }
-
 variable "resource_group_name" {
   type = map(object({
     rg = string
@@ -35,25 +34,35 @@ variable "resource_group_name" {
 
 variable "firewall_name" {
   description = "The name of the firewall"
-  type        = string
+  type        = map(object({
+    name = string
+  }))
 }
 
 variable "firewall_policy_name" {
   description = "The name of the firewall policy"
-  type        = string
+  type        = map(object({
+    name = string
+  }))
 }
 
 variable "route_table_name" {
   description = "The name of the route table"
-  type        = string
+  type        = map(object({
+    name = string
+  }))
 }
 
 variable "subnet_name" {
   description = "The name of the subnet"
-  type        = string
+  type        = map(object({
+    name = string
+  }))
 }
 
 variable "hub_name" {
   description = "The name of the hub"
-  type        = string
+  type        = map(object({
+    name = string
+  }))
 }
