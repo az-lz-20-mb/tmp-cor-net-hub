@@ -76,5 +76,5 @@ variable "naming" {
     route_table     = map(string)
     firewall        = map(string)
     firewall_policy = map(string)
-  })
+  }))
 }
