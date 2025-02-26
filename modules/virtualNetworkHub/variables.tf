@@ -29,45 +29,8 @@ variable "resource_group_name" {
   type = map(object({
     rg = string
     location = string
-    short_location = string
   }))
 }
-
-# variable "firewall_name" {
-#   description = "The name of the firewall"
-#   type        = map(object({
-#     name = string
-#   }))
-# }
-
-# variable "firewall_policy_name" {
-#   description = "The name of the firewall policy"
-#   type        = map(object({
-#     name = string
-#   }))
-# }
-
-# variable "route_table_name" {
-#   description = "The name of the route table"
-#   type        = map(object({
-#     name = string
-#   }))
-# }
-
-# variable "subnet_name" {
-#   description = "The name of the subnet"
-#   type        = map(object({
-#     name = string
-#   }))
-# }
-
-# variable "hub_name" {
-#   description = "The name of the hub"
-#   type        = map(object({
-#     name = string
-#   }))
-# }
-
 
 variable "naming" {
   description = "Naming convention object"
