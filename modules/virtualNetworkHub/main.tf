@@ -3,7 +3,7 @@ module "hubnetworking_hub" {
 
   hub_virtual_networks = {
     for key, hub in var.hub_virtual_networks : key => {
-      name                            = var.naming.virtual_network[hub.index].name
+      name                            = lookup(var.naming.virtual_network, hub.index, "default-vnet-name")
       address_space                   = hub.address_space
       location                        = lookup(var.resource_group_name[hub.index], "location")
       resource_group_name             = lookup(var.resource_group_name[hub.index], "rg")
