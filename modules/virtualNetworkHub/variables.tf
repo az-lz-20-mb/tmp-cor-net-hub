@@ -71,3 +71,4 @@ variable "resource_group_name" {
 variable "naming" {
   description = "Naming convention object"
   type        = map(string)
+}
