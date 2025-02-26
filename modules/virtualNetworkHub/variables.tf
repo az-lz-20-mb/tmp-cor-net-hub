@@ -32,50 +32,50 @@ variable "resource_group_name" {
   }))
 }
 
-variable "firewall_name" {
-  description = "The name of the firewall"
-  type        = map(object({
-    name = string
-  }))
-}
-
-variable "firewall_policy_name" {
-  description = "The name of the firewall policy"
-  type        = map(object({
-    name = string
-  }))
-}
-
-variable "route_table_name" {
-  description = "The name of the route table"
-  type        = map(object({
-    name = string
-  }))
-}
-
-variable "subnet_name" {
-  description = "The name of the subnet"
-  type        = map(object({
-    name = string
-  }))
-}
-
-variable "hub_name" {
-  description = "The name of the hub"
-  type        = map(object({
-    name = string
-  }))
-}
-
-
-# variable "naming" {
-#   description = "Naming convention object"
-#   type        = object({
-#     virtual_network = map(string)
-#     subnet          = map(string)
-#     route_table     = map(string)
-#     firewall        = map(string)
-#     firewall_policy = map(string)
-#   })
-
+# variable "firewall_name" {
+#   description = "The name of the firewall"
+#   type        = map(object({
+#     name = string
+#   }))
 # }
+
+# variable "firewall_policy_name" {
+#   description = "The name of the firewall policy"
+#   type        = map(object({
+#     name = string
+#   }))
+# }
+
+# variable "route_table_name" {
+#   description = "The name of the route table"
+#   type        = map(object({
+#     name = string
+#   }))
+# }
+
+# variable "subnet_name" {
+#   description = "The name of the subnet"
+#   type        = map(object({
+#     name = string
+#   }))
+# }
+
+# variable "hub_name" {
+#   description = "The name of the hub"
+#   type        = map(object({
+#     name = string
+#   }))
+# }
+
+
+variable "naming" {
+  description = "Naming convention object"
+  type        = object({
+    virtual_network = map(string)
+    subnet          = map(string)
+    route_table     = map(string)
+    firewall        = map(string)
+    firewall_policy = map(string)
+  })
+
+}
