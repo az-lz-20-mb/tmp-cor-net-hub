@@ -1,33 +1,29 @@
 variable "spokes" {
-  description = "Map of spoke virtual networks"
   type = map(object({
-    name                = string
-    location            = string
-    address_space       = list(string)
-    resource_group_name = string
-    peering             = map(object({
-      name                                 = string
-      remote_virtual_network_resource_id   = string
-      allow_forwarded_traffic              = bool
-      allow_gateway_transit                = bool
-      allow_virtual_network_access         = bool
-      use_remote_gateways                  = bool
-      create_reverse_peering               = bool
-      reverse_name                         = string
-      reverse_allow_forwarded_traffic      = bool
-      reverse_allow_gateway_transit        = bool
+    index           = number
+    address_space   = list(string)
+    location        = string
+    peerings        = map(object({
+      name                             = string
+      location                          = string
+      allow_forwarded_traffic           = bool
+      allow_gateway_transit             = bool
+      allow_virtual_network_access      = bool
+      use_remote_gateways               = bool
+      create_reverse_peering            = bool
+      reverse_name                      = string
+      reverse_allow_forwarded_traffic   = bool
+      reverse_allow_gateway_transit     = bool
       reverse_allow_virtual_network_access = bool
-      reverse_use_remote_gateways          = bool
+      reverse_use_remote_gateways       = bool
     }))
     subnets = map(object({
-      name             = string
-      address_prefixes = list(string)
-      route_table      = object({
-        id = string
-      })
+      index              = string
+      address_prefixes  = list(string)
+      location          = string
     }))
   }))
-  default = {}
+  description = "Configuration for each spoke, including its address space, peerings, and subnets."
 }
 
 variable "naming" {
@@ -51,12 +47,14 @@ variable "resource_group_name" {
 
 variable "remote_virtual_network" {
   type = map(object({
+    name = string
     id = string
   }))
 }
 
 variable "route_table" {
   type = map(object({
+    name = string
     id = string
   }))
 }

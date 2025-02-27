@@ -10,8 +10,9 @@ module "vnet_spoke" {
 
   peerings = {
     for peering_key, peering in each.value.peerings : peering_key => {
-        name                                 = "${lookup(var.naming[each.value.location].virtual_network_peering, "name")}-${each.value.index}"
-        remote_virtual_network_resource_id   = lookup(var.remote_virtual_network, peering.location).id
+        # name                                 = "${lookup(var.naming[each.value.location].virtual_network_peering, "name")}-${each.value.index}"
+        name                                  = peering.name  
+        remote_virtual_network_resource_id   = lookup(var.remote_virtual_network[each.key], "id")
         # remote_virtual_network_resource_id   = module.hub_mesh.virtual_networks["primary"].id
         allow_forwarded_traffic              = peering.allow_forwarded_traffic
         allow_gateway_transit                = peering.allow_gateway_transit
@@ -27,10 +28,10 @@ module "vnet_spoke" {
   }
   subnets = {
     for subnet_key, subnet in each.value.subnets : subnet_key => {
-        name             = subnet.name
+        name             = "${lookup(var.naming[each.value.location].subnet, "name")}-${subnet.index}"
         address_prefixes = subnet.address_prefixes
         route_table = {
-          id = lookup(var.route_table, subnet.location).id
+          id = lookup(var.route_table[each.key], "id")
       }
     }
   }
