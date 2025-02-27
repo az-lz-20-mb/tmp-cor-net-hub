@@ -37,10 +37,10 @@ module "hubnetworking_hub" {
   }
 }
 
-output "hub_vnet_ids" {
-  value = { for k, v in module.hubnetworking_hub : k => v.virtual_networks }
+output "virtual_networks" {
+  value = module.hubnetworking_hub.virtual_networks
 }
 
-output "snet_route_table_ids" {
-  value = { for k, v in module.hubnetworking_hub : k => v.hub_route_tables_user_subnets }
+output "hub_route_tables_user_subnets" {
+  value = module.hubnetworking_hub.hub_route_tables_user_subnets
 }

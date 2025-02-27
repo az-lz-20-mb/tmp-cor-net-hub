@@ -51,8 +51,8 @@ variable "resource_group_name" {
 #     hub_route_tables_user_subnets = map(string)
 #   }))
 # }
-variable "remote_virtual_network_resource_id" {
+variable "remote_virtual_networks" {
 }
 
-variable "route_table_id" {
+variable "snet_route_table" {
 }
