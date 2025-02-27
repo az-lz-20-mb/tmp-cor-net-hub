@@ -45,9 +45,16 @@ variable "resource_group_name" {
   }))
 }
 
-variable "remote_virtual_network" {
-  type = map(object({
-    virtual_networks = map(string)
-    hub_route_tables_user_subnets = map(string)
-  }))
+# variable "remote_virtual_network" {
+#   type = map(object({
+#     virtual_networks = map(string)
+#     hub_route_tables_user_subnets = map(string)
+#   }))
+# }
+variable "remote_virtual_network_resource_id" {
+  type = string
+}
+
+variable "route_table_id" {
+  type = string
 }
