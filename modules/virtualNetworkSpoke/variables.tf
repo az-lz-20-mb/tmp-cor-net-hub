@@ -47,14 +47,7 @@ variable "resource_group_name" {
 
 variable "remote_virtual_network" {
   type = map(object({
-    name = string
-    id = string
-  }))
-}
-
-variable "route_table" {
-  type = map(object({
-    name = string
-    id = string
+    virtual_networks = map(string)
+    hub_route_tables_user_subnets = map(string)
   }))
 }
