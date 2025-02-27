@@ -52,9 +52,7 @@ variable "resource_group_name" {
 #   }))
 # }
 variable "remote_virtual_network_resource_id" {
-  type = string
 }
 
 variable "route_table_id" {
-  type = string
 }
