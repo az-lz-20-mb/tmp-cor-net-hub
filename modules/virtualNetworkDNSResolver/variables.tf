@@ -42,3 +42,6 @@ variable "remote_virtual_networks" {
     }))
   }))
 }
+
+variable "remote_virtual_subnets " {
+}
