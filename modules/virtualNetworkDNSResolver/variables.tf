@@ -43,5 +43,6 @@ variable "remote_virtual_networks" {
   }))
 }
 
-variable "remote_virtual_subnets " {
+variable "remote_virtual_subnets" {
+  type = string
 }
