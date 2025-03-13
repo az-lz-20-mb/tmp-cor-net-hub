@@ -9,14 +9,14 @@ module "private_resolver" {
   inbound_endpoints = {
     "inbound1" = {
       name        = "inbound1"
-      subnet_name = lookup(module.hubnetworking_hub.virtual_networks[each.key].subnets, "subnet1").name
+      subnet_name = lookup(var.remote_virtual_networks[each.key].subnets, "subnet1").name
     }
   }
 
   outbound_endpoints = {
     "outbound1" = {
       name        = "outbound1"
-      subnet_name = lookup(module.hubnetworking_hub.virtual_networks[each.key].subnets, "subnet1").name
+      subnet_name = lookup(var.remote_virtual_networks[each.key].subnets, "subnet1").name
       forwarding_ruleset = {
         for ruleset_key, ruleset in each.value.forwarding_ruleset : ruleset_key => {
           name  = ruleset.name
