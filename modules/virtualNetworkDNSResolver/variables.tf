@@ -9,7 +9,7 @@ variable "resolvers" {
         name                     = string
         domain_name              = string
         state                    = string
-        destination_ip_addresses = list(string)
+        destination_ip_addresses = map(string)
       }))
     }))
   }))
