@@ -34,4 +34,11 @@ variable "naming" {
 }
 
 variable "remote_virtual_networks" {
+  description = "Map of remote virtual networks"
+  type        = map(object({
+    id      = string
+    subnets = map(object({
+      name = string
+    }))
+  }))
 }
