@@ -34,15 +34,11 @@ variable "naming" {
 }
 
 variable "remote_virtual_networks" {
-  description = "Map of remote virtual networks"
-  type        = map(object({
-    id      = string
-    subnets = map(object({
-      name = string
-    }))
-  }))
-}
-
-variable "remote_virtual_subnets" {
-  type = string
+  # description = "Map of remote virtual networks"
+  # type        = map(object({
+  #   id      = string
+  #   subnets = map(object({
+  #     name = string
+  #   }))
+  # }))
 }
