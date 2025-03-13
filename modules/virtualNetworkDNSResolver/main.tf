@@ -9,7 +9,7 @@ module "private_resolver" {
   inbound_endpoints = {
     "inbound1" = {
       name        = "inbound1"
-      subnet_name = lookup(var.remote_virtual_networks[each.key].subnets, "name")
+      subnet_name = lookup(var.remote_virtual_networks[each.key].subnets["subnet1"], "name")
     }
   }
 
