@@ -1,10 +1,10 @@
 module "private_resolver" {
   source = "Azure/avm-res-network-dnsresolver/azurerm"
   for_each                    = var.resolvers
-  resource_group_name         = lookup(var.resource_group_name[hub.location], "rg")
+  resource_group_name         = lookup(var.resource_group_name[each.value.location_key], "rg")
   name                        = "resolver"
   virtual_network_resource_id = lookup(var.remote_virtual_networks[each.key], "id")
-  location                    = lookup(var.resource_group_name[hub.location], "location")
+  location                    = lookup(var.resource_group_name[each.value.location_key], "location")
 
   inbound_endpoints = {
     "inbound1" = {
