@@ -1,6 +1,7 @@
 variable "route_tables" {
   type = map(object({
     location_key            = string
+    index                  = string
     routes = map(object({
       name                   = string
       address_prefix         = string
