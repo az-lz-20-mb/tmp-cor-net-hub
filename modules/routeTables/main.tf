@@ -1,7 +1,5 @@
 module "route_tables" {
   source           = "git::https://github.com/Azure/terraform-azurerm-avm-res-network-routetable.git"
-  enable_telemetry = var.enable_telemetry
-
   for_each            = var.route_tables
   name                = "${lookup(var.naming[each.value.location_key].route_table, "name")}-${each.value.index}"
   resource_group_name = lookup(var.resource_group_name[each.value.location_key], "rg")
