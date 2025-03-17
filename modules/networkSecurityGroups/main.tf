@@ -1,5 +1,5 @@
 module "nsg" {
-  source   = "https://github.com/Azure/terraform-azurerm-avm-res-network-networksecuritygroup.git"
+  source   = "git::https://github.com/Azure/terraform-azurerm-avm-res-network-networksecuritygroup.git"
 
   for_each            = var.network_security_groups
   name                = "${lookup(var.naming[each.value.location_key].network_security_group, "name")}-${each.value.index}"
