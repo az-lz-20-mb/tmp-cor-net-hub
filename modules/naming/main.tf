@@ -37,8 +37,8 @@ module "naming" {
 output "lz_custom_names" {
   value = {
     for key, value in var.index_map : key => {
-      hub_base_resource_group_name          = "${module.naming[key].resource_group.name}-${local.custom_naming.rg_hub_base}"
-      spoke_base_resource_group_name        = "${module.naming[key].resource_group.name}-${local.custom_naming.rg_spoke_base}"
+      hub_base_resource_group_name          = "${module.naming[key].resource_group.name}-${local.naming_purpose.hub}-${local.custom_naming.rg_base}"
+      spoke_base_resource_group_name        = "${module.naming[key].resource_group.name}-${local.naming_purpose.spoke}-${local.custom_naming.rg_base}"
       hub_network_security_group_name       = "${module.naming[key].network_security_group.name}-${local.naming_purpose.hub}"
       spoke_network_security_group_name     = "${module.naming[key].network_security_group.name}-${local.naming_purpose.spoke}"
       network_security_group_rule_name      = local.custom_naming.nsg_rule
