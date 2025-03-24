@@ -47,7 +47,7 @@ output "lz_custom_names" {
       dns_resolver_name                     = "${local.custom_naming.pdns_resolver}-${key}-${local.tenant}"   
       dns_in_endpoint_name                  = "${local.custom_naming.pdns_in_endpoint}-${key}-${local.tenant}" 
       dns_out_endpoint_name                 = "${local.custom_naming.pdns_out_endpoint}-${key}-${local.tenant}" 
-      virtual_gateway_name                  = module.naming[key].virtual_gateway.name
+      virtual_gateway_name                  = module.naming[key].virtual_network_gateway.name
       virtual_network_hub_name              = "${module.naming[key].virtual_network.name}-${local.naming_purpose.hub}" 
       hub_firewall_name                     = "${module.naming[key].firewall.name}-${local.naming_purpose.hub}" 
       hub_firewall_policy_name              = "${module.naming[key].firewall_policy.name}-${local.naming_purpose.hub}" // add the tier of firewall 
