@@ -6,6 +6,6 @@ module "uami" {
   }
 
   location            = lookup(var.resource_group_name[each.value.location], "location") //to cahnge
-  name                = "${var.naming.custim_lz_names[each.value.location].fwp_user_assigned_identity_name}-${each.value.index}"
+  name                = "${var.naming.custom_lz_names[each.value.location].fwp_user_assigned_identity_name}-${each.value.index}"
   resource_group_name = lookup(var.resource_group_name[each.value.location], "rg") 
 }
