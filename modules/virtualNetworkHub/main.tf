@@ -1,5 +1,5 @@
 module "hubnetworking_hub" {
-  source = "git::https://github.com/az-lz-20-mb/mod-avm-ptn-hubnetworking.git"
+  source = "https://github.com/Azure/terraform-azurerm-avm-ptn-hubnetworking.git?ref=v0.7.0"
 
   hub_virtual_networks = {
     for key, hub in var.hub_virtual_networks : key => {
