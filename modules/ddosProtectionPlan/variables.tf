@@ -6,3 +6,13 @@ variable "ddos_protection_plans" {
   }))
   default = {}
 }
+
+variable "resource_group_name" {
+  type = map(object({
+    rg = string
+    location = string
+  }))
+}
+
+variable "naming" {
+}

@@ -4,7 +4,7 @@ module "local_network_gateway" {
 
   # Resource group variables
   location           = lookup(var.resource_group_name[each.value.location], "location") //to cahnge
-  name               = "${var.naming.lz_custom_names[each.value.location].local_network_gateway_name}-${hub.index}"
+  name               = "${var.naming.lz_custom_names[each.value.location].local_network_gateway_name}-${each.value.index}"
 
   # Local network gateway variables
   resource_group_name = lookup(var.resource_group_name[each.value.location], "rg") 

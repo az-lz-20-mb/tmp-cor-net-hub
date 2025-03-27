@@ -50,6 +50,7 @@ output "lz_custom_names" {
       spoke_subnet_name                     = module.naming[key].subnet.name //add subsciption name and service name from key
       local_network_gateway_name            = module.naming[key].local_network_gateway.name //for local network gateway
       fwp_user_assigned_identity_name       = "${module.naming[key].user_assigned_identity.name}-${local.naming_purpose.hub}-${local.custom_naming.policy}"
+      ddos_protection_plan_name             = module.naming[key].ddos_protection_plan.name
     }
   }
 }

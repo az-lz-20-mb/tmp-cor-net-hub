@@ -3,7 +3,7 @@ module "vnet_spoke" {
   source  = "Azure/avm-res-network-virtualnetwork/azurerm"
   version = "0.7.1"
 
-  name                = "${lookup(var.naming[each.value.location].virtual_network, "name")}-${each.value.index}"
+  name                = "${var.naming.lz_custom_names[each.value.location].virtual_network_spoke_name}-${each.value.index}"
   address_space       = each.value.address_space
   resource_group_name = lookup(var.resource_group_name[each.value.location], "rg")
   location            = lookup(var.resource_group_name[each.value.location], "location")
@@ -28,7 +28,7 @@ module "vnet_spoke" {
   }
   subnets = {
     for subnet_key, subnet in each.value.subnets : subnet_key => {
-        name             = "${lookup(var.naming[each.value.location].subnet, "name")}-${subnet.index}"
+        name             = "${var.naming.lz_custom_names[each.value.location].spoke_subnet_name}-${subnet.index}"
         address_prefixes = subnet.address_prefixes
         route_table = {
           id = lookup(var.snet_route_table[each.key], "id")

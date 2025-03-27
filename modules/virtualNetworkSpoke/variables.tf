@@ -27,15 +27,6 @@ variable "spokes" {
 }
 
 variable "naming" {
-  description = "Naming convention object"
-  type        = map(object({
-    virtual_network = map(string)
-    virtual_network_peering       = map(string)
-    subnet          = map(string)
-    route_table     = map(string)
-    firewall        = map(string)
-    firewall_policy = map(string)
-  }))
 }
 
 variable "resource_group_name" {
