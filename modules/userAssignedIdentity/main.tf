@@ -5,7 +5,7 @@ module "uami" {
     if v.firewall.firewall_policy.enable_uami == true
   }
 
-  location            = lookup(var.resource_group_name[v.location], "location") //to cahnge
-  name                = "${module.naming.custim_lz_names.fwp_user_assigned_identity_name}-${v.index}"
-  resource_group_name = lookup(var.resource_group_name[v.location], "rg") 
+  location            = lookup(var.resource_group_name[each.value.location], "location") //to cahnge
+  name                = "${module.naming.custim_lz_names[each.value.location].fwp_user_assigned_identity_name}-${v.index}"
+  resource_group_name = lookup(var.resource_group_name[each.value.location], "rg") 
 }
