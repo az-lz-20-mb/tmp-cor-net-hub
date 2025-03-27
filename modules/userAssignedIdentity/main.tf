@@ -1,5 +1,5 @@
 module "uami" {
-  source   = "https://github.com/Azure/terraform-azurerm-avm-res-managedidentity-userassignedidentity.git"
+  source   = "git::https://github.com/Azure/terraform-azurerm-avm-res-managedidentity-userassignedidentity.git"
   for_each = { 
     for k, v in var.hub_virtual_networks : k => v 
     if v.firewall.firewall_policy.enable_uami == true
