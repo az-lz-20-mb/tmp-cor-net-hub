@@ -13,6 +13,7 @@ locals {
         pdns_resolver = "dnspr"
         pdns_in_endpoint = "dnsie"
         pdns_out_endpoint = "dnsoe"
+        policy = "firewall-policy"
     }
 }
 
@@ -22,17 +23,9 @@ module "naming" {
   suffix   = [each.key, local.tenant] 
 }
 
-# output "hub_resource_suffix" {
-#     value = local.naming_purpose.vhub
-# }
-
-# output "spoke_resource_suffix" {
-#     value = local.naming_purpose.vspoke
-# }
-
-# output "lz_caf_names" {
-#   value = module.naming
-# }
+output "raw_module" {
+  value = module.naming
+}
 
 output "lz_custom_names" {
   value = {
@@ -47,23 +40,17 @@ output "lz_custom_names" {
       dns_resolver_name                     = "${local.custom_naming.pdns_resolver}-${key}-${local.tenant}"   
       dns_in_endpoint_name                  = "${local.custom_naming.pdns_in_endpoint}-${key}-${local.tenant}" 
       dns_out_endpoint_name                 = "${local.custom_naming.pdns_out_endpoint}-${key}-${local.tenant}" 
-      virtual_gateway_name                  = module.naming[key].virtual_network_gateway.name
+      virtual_network_gateway_name          = module.naming[key].virtual_network_gateway.name
       virtual_network_hub_name              = "${module.naming[key].virtual_network.name}-${local.naming_purpose.hub}" 
       hub_firewall_name                     = "${module.naming[key].firewall.name}-${local.naming_purpose.hub}" 
       hub_firewall_policy_name              = "${module.naming[key].firewall_policy.name}-${local.naming_purpose.hub}" // add the tier of firewall 
       hub_subnet_name                       = "${module.naming[key].subnet.name}-${local.naming_purpose.hub}" //add service name from key 
       virtual_network_spoke_name            = "${module.naming[key].virtual_network.name}-${local.naming_purpose.spoke}"
       peering_name                          = local.custom_naming.peering
-      spoke_subnet_name                    =  module.naming[key].subnet.name //add subsciption name and service name from key
+      spoke_subnet_name                     = module.naming[key].subnet.name //add subsciption name and service name from key
+      local_network_gateway_name            = module.naming[key].local_network_gateway.name //for local network gateway
+      fwp_user_assigned_identity_name       = "${module.naming[key].user_assigned_identity.name}-${local.naming_purpose.hub}-${local.custom_naming.policy}"
     }
   }
 }
 
-# output "lz_caf_naming" {
-#   value = {
-#     for key, value in var.index_map : key => {
-#         hub_resource = "${module.naming[key][resource].name}-${local.custom_naming.rg_hub_base}"
-#         spoke_resource = "${module.naming[key][resource].name}-${local.custom_naming.rg_spoke_base}"
-#     }
-#   }
-# }
