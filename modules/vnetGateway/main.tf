@@ -3,7 +3,7 @@ module "vgw" {
 
   for_each            = var.virtual_network_gateways
 
-  name                = "${lookup(var.naming.lz_custom_names[each.value.location_key].virtual_network_gateway_name)}-${each.value.index}"
+  name                = "${var.naming.lz_custom_names[each.value.location_key].virtual_network_gateway_name}-${each.value.index}"
   location            = lookup(var.remote_virtual_networks[each.key], "location")
   sku                 = each.value.sku
   type                = each.value.type
