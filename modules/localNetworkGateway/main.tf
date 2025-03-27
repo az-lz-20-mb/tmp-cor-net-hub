@@ -1,5 +1,5 @@
 module "local_network_gateway" {
-  source = "git::https://github.com/Azure/terraform-azurerm-avm-res-network-localnetworkgateway.git?ref=ix/terraform-version-1.9-2.0-terraform-azurerm-avm-res-network-localnetworkgateway"  
+  source = "git::https://github.com/Azure/terraform-azurerm-avm-res-network-localnetworkgateway.git?ref=fix/terraform-version-1.9-2.0-terraform-azurerm-avm-res-network-localnetworkgateway"  
   for_each = var.local_network_gateways
 
   # Resource group variables
